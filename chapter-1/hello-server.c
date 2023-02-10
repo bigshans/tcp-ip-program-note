@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     // 创建套接字，返回套接字的文件描述符，是整数
     // PF_INET 协议族
-    // AP_INET 地址族
+    // AF_INET 地址族
     // 两者在实际情况中是相等的
     serv_sock = socket(PF_INET, SOCK_STREAM, 0);
     if (serv_sock < 0) {
