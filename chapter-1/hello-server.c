@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
     // PF_INET 协议族
     // AF_INET 地址族
     // 两者在实际情况中是相等的
+    // SOCK_STREAM 建立面向连接的数据传输（TCP）
+    // SOCK_DGRAM 建立起无连接的服务（UDP）
+    // SOCK_RAW 原始套接字
     serv_sock = socket(PF_INET, SOCK_STREAM, 0);
     if (serv_sock < 0) {
         error_handling("socket() error");
