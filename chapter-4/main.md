@@ -38,4 +38,56 @@ TCP/UDP 层以 IP 层的数据为基础完成实际数据传输。
 
 ## 4.2 实现基于 TCP 的服务器端/客户端
 
+### TCP 服务器端的默认函数调用顺序
 
+```
+socket() 创建套接字
+  |
+  v
+bind() 分配套接字地址
+  |
+  v
+listen() 等待连接请求状态
+  |
+  v
+accept() 允许连接
+  |
+  v
+read()/write() 数据交换
+  |
+  v
+close() 断开连接
+```
+
+### 进入等待连接请求状态
+
+```c
+#include <sys/socket.h>
+
+/**
+ * @param sock 希望进入连接请求状态的套接字文件描述符，传递的描述符套接字参数将成为服务器端套接字。
+ * @param backlog 连接请求等待队列的长度。
+ * @return 成功时返回 0 ，失败时返回 -1 。
+ */
+int listen(int sock, int backlog);
+```
+
+服务器端处于等待连接请求状态是指，受理连接前一直使请求出于等待状态。
+
+### 受理客户端连接请求
+
+```c
+#include <sys/socket.h>
+
+/**
+ * @param 服务器套接字文件描述符
+ * @param addr 保存发起连接请求的客户端地址信息的变量地址值，调用后填充客户端地址信息
+ * @param addrlen 第二个地址的长度
+ * @return 成功时返回套接字文件描述符，失败时返回 -1
+ */
+int accept(int sock, struct sockaddr * addr, socklen_t * addrlen);
+```
+
+`accept` 函数受理连接请求等待队列中待处理的客户端连接请求。
+
+### TCP 客户端的默认函数调用顺序
